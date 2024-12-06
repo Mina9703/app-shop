@@ -10,6 +10,9 @@ use App\Http\Controllers\CatalogController;
 
 use App\Http\Controllers\TrainerController;
 
+use App\Http\Controllers\PDFController;
+
+use App\Http\Controllers\Api\SearchController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -108,6 +111,13 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('delete/{id}', [TrainerController::class, 'destroy']);;
-Route::get('edit/{id}', [TrainerController::class, 'edit']);;
+Route::get('delete/{id}', [TrainerController::class, 'destroy']);
+Route::get('edit/{id}', [TrainerController::class, 'edit']);
 Route::put('/trainers/{id}', [TrainerController::class, 'update'])->name('trainers.update');
+
+Route::get('generate-pdf/{id}', [PDFController::class, 'generatePDF'])->name('generate.pdf');
+
+
+Route::get('/', [SearchController::class, 'search'])->name('trainers.search');
+Route::get('api/search', [SearchController::class, 'search']);
+

@@ -14,4 +14,8 @@
         <a href="/delete/{{$trainer->id}}" class="btn btn-primary">Delete</a>
         <a href="/trainers/{{$trainer->id}}/edit" class="btn btn-secondary">Editar...</a>
     </div>
+
+    <div class="text-center" style="margin-top: 20px;">
+        <a href="{{ route('generate.pdf', $trainer->id) }}" class="btn btn-sm btn-primary">Generar PDF</a>
+    </div>
 @endsection

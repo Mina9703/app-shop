@@ -73,28 +73,28 @@ class TrainerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Trainer $trainer)
+    public function update(Request $request, Trainer $trainer) 
     {
-        //
-        //return $trainer;
-        //return $request;
         $trainer->fill($request->except('avatar'));
-        if ($request->hasFile('avatar')){
-            $file=$request->file('avatar');
-            $name=time.$file->getClientOriginalName();
-
-            //imagen
-            $trainer->avatar=$name;
-            $file->move(public_path( ). '/images/', $name);
-            // return redirect()->action('TrainerController@index);
-            //return 'Guardado';
-
-            //return $name;
-            // code...
+    
+        if ($request->hasFile('avatar')) {
+            // Eliminar la imagen anterior si existe
+            $file_path = public_path('images/'.$trainer->avatar);
+            if (File::exists($file_path)) {
+                File::delete($file_path);
+            }
+    
+            // Guardar la nueva imagen
+            $file = $request->file('avatar'); 
+            $name = time() . $file->getClientOriginalName();
+            $file->move(public_path('images'), $name);
+    
+            // Actualizar el nombre del archivo en el modelo
+            $trainer->avatar = $name;
         }
+    
         $trainer->save();
         return redirect('trainers/');
-
     }
 
     /**
